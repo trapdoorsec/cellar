@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=cellar
+Comment=Have files. Will ISO.
+Exec=cellar
+Icon=cellar
+Categories=Utility;
+Terminal=false

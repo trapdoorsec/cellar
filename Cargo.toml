@@ -1,0 +1,76 @@
+[package]
+name = "cellar"
+version = "0.1.0"
+edition = "2021"
+description = "Have files. Will ISO."
+license = "GPL-3.0-or-later"
+authors = ["J. 'akses' Burger"]
+repository = "https://github.com/trapdoorsec/cellar"
+homepage = "https://github.com/trapdoorsec/homebrew-tap"
+
+[package.metadata.deb]
+section = "utils"
+depends = "$auto"
+assets = [
+  ["target/release/cellar", "usr/bin/", "755"],
+  ["assets/cellar.desktop", "usr/share/applications/", "644"],
+  ["assets/cellar-32x32.png", "usr/share/icons/hicolor/32x32/apps/cellar.png", "644"],
+  ["assets/cellar-48x48.png", "usr/share/icons/hicolor/48x48/apps/cellar.png", "644"],
+  ["assets/cellar-64x64.png", "usr/share/icons/hicolor/64x64/apps/cellar.png", "644"],
+  ["assets/cellar-128x128.png", "usr/share/icons/hicolor/128x128/apps/cellar.png", "644"],
+  ["assets/cellar-256x256.png", "usr/share/icons/hicolor/256x256/apps/cellar.png", "644"],
+  ["assets/cellar.svg", "usr/share/icons/hicolor/scalable/apps/cellar.svg", "644"],
+]
+
+[package.metadata.generate-rpm]
+assets = [
+  ["target/release/cellar", "usr/bin/", "755"],
+  ["assets/cellar.desktop", "usr/share/applications/", "644"],
+  ["assets/cellar-32x32.png", "usr/share/icons/hicolor/32x32/apps/cellar.png", "644"],
+  ["assets/cellar-48x48.png", "usr/share/icons/hicolor/48x48/apps/cellar.png", "644"],
+  ["assets/cellar-64x64.png", "usr/share/icons/hicolor/64x64/apps/cellar.png", "644"],
+  ["assets/cellar-128x128.png", "usr/share/icons/hicolor/128x128/apps/cellar.png", "644"],
+  ["assets/cellar-256x256.png", "usr/share/icons/hicolor/256x256/apps/cellar.png", "644"],
+  ["assets/cellar.svg", "usr/share/icons/hicolor/scalable/apps/cellar.svg", "644"],
+]
+
+[package.metadata.generate-rpm.requires]
+libxkbcommon = "*"
+mesa-libGL = "*"
+
+[package.metadata.wix]
+upgrade-guid = "FE4928C3-9FDD-4174-AA5C-B6FB747F2342"
+path-guid = "40290DA6-3355-438E-9006-411603C63027"
+license = false
+eula = false
+
+[dependencies]
+eframe = { version = "0.34", default-features = false, features = [
+    "default_fonts",
+    "glow",
+    "persistence",
+    "wayland",
+    "x11",
+] }
+egui = "0.34"
+image = { version = "0.25", default-features = false, features = ["png"] }
+rfd = "0.17"
+sha2 = "0.10"
+hex = "0.4"
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+winit = { version = "0.30", default-features = false, features = ["x11"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
