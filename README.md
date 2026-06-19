@@ -5,6 +5,16 @@ Have files. Will ISO.
 > Pull requests welcome — see [CONTRIBUTORS.md](CONTRIBUTORS.md) for build, test, and release workflows.
 
 A small, cross-platform GUI for building ISO 9660 images. Single binary, no installer, no telemetry. Built because the existing options on Linux and macOS are either ancient KDE tools, Windows-only freeware, or browser-based services you don't want to feed sensitive files to.
+## Install
+
+I'm still playing with the best ways to distribute this tool across platforms but for now:
+
+1. Goto to the releases page https://github.com/trapdoorsec/cellar/releases
+2. The latest version is usually the one you want
+3. Look for the Assets heading under the latest version
+4. Download the archive appropriate for your operating system
+
+Currently, Linux and Windows are supported on intel/amd64 systems. Mac OSX on ARM soon when I can find a suitable build environment for it.
 
 ## Status
 
