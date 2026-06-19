@@ -76,9 +76,33 @@ fn run_gui() -> eframe::Result<()> {
         options,
         Box::new(|cc| {
             cc.egui_ctx.set_visuals(egui::Visuals::dark());
+            setup_fonts(&cc.egui_ctx);
             Ok(Box::new(app::CellarApp::new(cc)))
         }),
     )
+}
+
+fn setup_fonts(ctx: &egui::Context) {
+    let mut fonts = egui::FontDefinitions::default();
+
+    fonts.font_data.insert(
+        "Inter-Regular".into(),
+        std::sync::Arc::new(egui::FontData::from_static(include_bytes!("../assets/Inter-Regular.ttf"))),
+    );
+    fonts.font_data.insert(
+        "Inter-Bold".into(),
+        std::sync::Arc::new(egui::FontData::from_static(include_bytes!("../assets/Inter-Bold.ttf"))),
+    );
+    fonts.font_data.insert(
+        "Inter-Medium".into(),
+        std::sync::Arc::new(egui::FontData::from_static(include_bytes!("../assets/Inter-Medium.ttf"))),
+    );
+
+    fonts.families.entry(egui::FontFamily::Proportional).or_default().insert(0, "Inter-Regular".into());
+    fonts.families.entry(egui::FontFamily::Proportional).or_default().insert(1, "Inter-Bold".into());
+    fonts.families.entry(egui::FontFamily::Proportional).or_default().insert(2, "Inter-Medium".into());
+
+    ctx.set_fonts(fonts);
 }
 
 fn load_icon() -> Option<egui::IconData> {

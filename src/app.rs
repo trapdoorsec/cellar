@@ -425,6 +425,11 @@ impl CellarApp {
                 toggle.on_hover_text(
                     "Adds a manifest, source/notes fields, and shows suspicious-path warnings.",
                 );
+                ui.label(
+                    RichText::new(env!("CARGO_PKG_VERSION"))
+                        .small()
+                        .color(Color32::from_rgb(80, 80, 80)),
+                );
             });
         });
     }
