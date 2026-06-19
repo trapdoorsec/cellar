@@ -8,7 +8,7 @@ authors = ["J. 'akses' Burger"]
 repository = "https://github.com/trapdoorsec/cellar"
 homepage = "https://github.com/trapdoorsec/homebrew-tap"
 
-[package.metadata.dist]
+[workspace.metadata]
 allow-dirty = ["ci"]
 
 [package.metadata.deb]
