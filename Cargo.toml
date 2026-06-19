@@ -9,7 +9,7 @@ repository = "https://github.com/trapdoorsec/cellar"
 homepage = "https://github.com/trapdoorsec/homebrew-tap"
 
 [package.metadata.dist]
-allow-dirty = ["Cargo.dist"]
+allow-dirty = ["ci"]
 
 [package.metadata.deb]
 section = "utils"
