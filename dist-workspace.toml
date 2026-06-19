@@ -19,5 +19,5 @@ ci = "github"
 tap = "trapdoorsec/homebrew-tap"
 # Publish jobs to run in CI
 publish-jobs = ["homebrew"]
-# Allow dirty commits to be published because the generated release.yml file doesn't pin the GH actions
+# Allow dirty because the generated release.yml file doesn't pin the GH actions
 allow-dirty = ["ci", "msi"]
