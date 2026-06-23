@@ -42,7 +42,7 @@ on:
   pull_request:
   push:
     tags:
-      - "**[0-9]+.[0-9]+.[0-9]+*"
+      - '**[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   # Run 'dist plan' (or host) to determine what tasks we need to do
@@ -56,7 +56,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           persist-credentials: false
           submodules: recursive
@@ -64,12 +64,7 @@ jobs:
         # we specify bash to get pipefail; it guards against the `curl` command
         # failing. otherwise `sh` won't catch that `curl` returned non-0
         shell: bash
-        run: |
-          curl --proto '=https' --tlsv1.2 -LsSf \
-            https://github.com/axodotdev/cargo-dist/releases/download/v0.32.0/cargo-dist-installer.sh \
-            -o installer.sh
-          echo "b657cf8c04a8b7bc28f39d220f7e6dd11bbd2bdb072c552262bd9ccf597261b5 installer.sh" | sha256sum -c -
-          sh installer.sh
+        run: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.32.0/cargo-dist-installer.sh | sh"
       - name: Cache dist
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
@@ -144,19 +139,6 @@ jobs:
       - name: Install dependencies
         run: |
           ${{ matrix.packages_install }}
-      - name: Install WiX Toolset (Windows)
-        if: ${{ startsWith(matrix.runner, 'windows') }}
-        shell: pwsh
-        run: |
-          choco install wixtoolset -y --version 3.14.1.20250415
-          $wixBin = Get-ChildItem 'C:\Program Files (x86)' -Filter 'WiX Toolset*' -Directory |
-                      Sort-Object Name -Descending | Select-Object -First 1 |
-                      ForEach-Object { Join-Path $_.FullName 'bin' }
-                    if ($wixBin -and (Test-Path $wixBin)) {
-                      $wixBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-                    } else {
-                      Write-Error "WiX bin not found after install"; exit 1
-                    }
       - name: Build artifacts
         run: |
           # Actually do builds and make zips and whatnot
